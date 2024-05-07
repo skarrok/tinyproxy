@@ -1,0 +1,95 @@
+[package]
+name = "tinyproxy"
+version = "0.1.0"
+edition = "2021"
+repository = "https://github.com/skarrok/tinyproxy"
+license = "MIT"
+
+[dependencies]
+anyhow = "1.0.81"
+clap = { version = "4.5.3", features = ["derive", "env"] }
+dotenvy = "0.15.7"
+http = "1.1.0"
+httparse = "1.8.0"
+prometheus-client = "0.22.2"
+serde_json = "1.0.114"
+serde = { version = "1.0.197", features = ["derive"] }
+supports-color = "3.0.0"
+thiserror = "1.0.58"
+tiny_http = "0.12.0"
+tokio = { version = "1.36.0", features = ["io-util", "macros", "net", "rt"] }
+tracing-subscriber = { version = "0.3.18", features = ["json", "env-filter"] }
+tracing = { version = "0.1.40", features = ["log"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+
+clone_on_ref_ptr = "deny"
+disallowed_script_idents = "deny"
+empty_enum_variants_with_brackets = "deny"
+empty_structs_with_brackets = "deny"
+enum_glob_use = "deny"
+error_impl_error = "deny"
+exit = "deny"
+explicit_into_iter_loop = "deny"
+explicit_iter_loop = "deny"
+float_cmp_const = "deny"
+if_then_some_else_none = "deny"
+indexing_slicing = "deny"
+lossy_float_literal = "deny"
+map_err_ignore = "deny"
+multiple_inherent_impl = "deny"
+needless_raw_strings = "deny"
+partial_pub_fields = "deny"
+rc_buffer = "deny"
+rc_mutex = "deny"
+rest_pat_in_fully_bound_structs = "deny"
+self_named_module_files = "deny"
+semicolon_inside_block = "deny"
+semicolon_outside_block = "deny"
+string_slice = "deny"
+string_to_string = "deny"
+tests_outside_test_module = "deny"
+try_err = "deny"
+unnecessary_self_imports = "deny"
+unneeded_field_pattern = "deny"
+unseparated_literal_suffix = "deny"
+verbose_file_reads = "deny"
+
+complexity = { level = "deny", priority = -1 }
+perf = { level = "deny", priority = -1 }
+style = { level = "deny", priority = -1 }
+suspicious = { level = "deny", priority = -1 }
+
+similar_names = "allow"
+single_match_else = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+
+# The profile that 'cargo dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
+# Config for 'cargo dist'
+[workspace.metadata.dist]
+# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.20.0"
+# CI backends to support
+ci = "github"
+# The installers to generate for each app
+installers = ["shell"]
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-unknown-linux-musl", "x86_64-pc-windows-msvc"]
+# Publish jobs to run in CI
+pr-run-mode = "plan"
+# Whether to install an updater program
+install-updater = false
+# Path that installers should place binaries in
+install-path = "CARGO_HOME"
