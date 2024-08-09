@@ -1,4 +1,4 @@
-FROM rust:1.77.0 as chef
+FROM rust:1.77.0 AS chef
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
     cargo install cargo-chef
 WORKDIR /app
@@ -18,6 +18,6 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry \
     cargo build --release --bin tinyproxy \
     && cp /app/target/release/tinyproxy /app
 
-FROM gcr.io/distroless/cc-debian12:nonroot as release
+FROM gcr.io/distroless/cc-debian12:nonroot AS release
 COPY --from=builder /app/tinyproxy /
 CMD ["/tinyproxy"]
